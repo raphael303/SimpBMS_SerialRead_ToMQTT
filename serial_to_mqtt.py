@@ -9,17 +9,19 @@ MQTT_PORT = 1883
 MQTT_USER = "mqtt_user"
 MQTT_PASSWORD = "mqtt_password"
 MQTT_TOPIC = "/homeassistant/technical/powerwall/" # or whatever you want it
+MQTT_COMMAND_TOPIC = "/homeassistant/technical/powerwall/command" # or whatever you want it
 
 # Serial Port Settings
-SERIAL_PORT = "/dev/ttyACM0" # or wherever you have it
+SERIAL_PORT = "/dev/ttyACM0" # or wherever you have it, see FindSerialOnPi.md for instructions
 BAUD_RATE = 115200
 
 # Global flag for service menu mode
 in_service_menu = False
 
+# This is work in progress and should allow for changing settings on the SimpBMS through MQTT in the future. Doesn't work yet though. SyncProblems
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code " + str(rc))
-    client.subscribe("/homeassistant/technical/powerwall/command")
+    client.subscribe(MQTT_COMMAND_TOPIC) 
 
 def on_publish(client, userdata, result):
     print("Data published")
@@ -51,7 +53,7 @@ def on_message(client, userdata, message):
     client.on_connect = on_connect
     client.on_publish = on_publish
     client.connect(MQTT_BROKER, MQTT_PORT, 60)
-    client.subscribe("/homeassistant/technical/powerwall/command")
+    client.subscribe(MQTT_COMMAND_TOPIC)
     client.on_connect = on_connect
     client.on_message = on_message
 
