@@ -1,4 +1,5 @@
-# SimpBMS Battery Management System - Read the debug info, which is sent via USB and send it to MQTT
+# SimpBMS Battery Management System Serial reader 
+## This reads the debug info, which is sent via USB, and sends it to MQTT
 This reads from a SimpBMS, connected via USB, and sends the debug output to MQTT. Tested on a raspberry Pi.
 
 Copy serial_to_mqtt.py to some folder on your pi or create it in some place with: 
